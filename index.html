@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fumec CRUD</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+</head>
+<body>
+
+	<div class="container">
+		<h1>Fumec Store Admin</h1>
+		<br>
+
+		<h2>Add Product</h2>
+		<!-- <form> -->
+
+			<div class="form-group">
+				<label for="product-name">Product Name</label>
+				<input class="form-control" type="text" name="product-name" id="product-name" placeholder="Name">
+			</div>
+
+			<div class="form-group">
+				<label for="product-category">Product Category</label>
+				<input class="form-control" type="text" name="product-category" id="product-category" placeholder="Category">
+			</div>
+
+			<div class="form-group">
+				<label for="product-price">Product Category</label>
+				<input class="form-control" type="number" name="product-price" id="product-price" placeholder="Price">
+			</div>
+
+			<button onclick="addProduct()" class="btn btn-primary">Add Product</button>	
+		<!-- </form>	 -->
+
+		<br>
+		<hr>
+
+		<h2>View Products</h2>
+		<div id="products">
+			
+		</div>
+
+	</div>
+	
+
+	<script src="https://www.gstatic.com/firebasejs/5.5.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.5.1/firebase-firestore.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	  	apiKey: "AIzaSyCqa7p_UDuXiXEDBpYRiqjkMP071ZRjTaU",
+	  	authDomain: "fumec-50e66.firebaseapp.com",
+	  	databaseURL: "https://fumec-50e66.firebaseio.com",
+	  	projectId: "fumec-50e66",
+	  	storageBucket: "fumec-50e66.appspot.com",
+	  	messagingSenderId: "1041379961382"
+	  };
+	  firebase.initializeApp(config);
+
+	  // Initialize Cloud Firestore through Firebase
+	  var db = firebase.firestore();
+
+	  // Disable deprecated features
+	  db.settings({
+	  	timestampsInSnapshots: true
+	  });
+
+
+	  function addProduct() {
+
+	  	let name = document.getElementById('product-name').value;
+	  	let category = document.getElementById('product-category').value;
+	  	let price = document.getElementById('product-price').value;
+
+	  	console.log('NAME ', name);
+	  	console.log('CATEGORY ', category);
+	  	console.log('PRICE ', price);
+
+	  	db.collection("products").add({
+	  		name: name,
+	  		category: category,
+	  		price: price
+	  	})
+	  	.then(function(docRef) {
+	  		console.log("Document written with ID: ", docRef.id);
+	  	})
+	  	.catch(function(error) {
+	  		console.error("Error adding document: ", error);
+	  	});	
+	  }
+
+	  // document.getElementById('products').innerHTML = "<>"
+
+	</script>
+
+	
+</body>
+</html>
